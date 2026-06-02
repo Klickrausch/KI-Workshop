@@ -74,8 +74,13 @@
       font-size: 14px;
       font-weight: 600;
       transition: background .2s;
+      white-space: nowrap;
     }
     .nav-cta:hover { background: var(--gold-dark); }
+    @media (max-width: 480px) {
+      .nav-cta { padding: 7px 14px; font-size: 12px; }
+      .nav-logo { font-size: 14px; }
+    }
 
     /* ── HERO ── */
     .hero {
@@ -456,13 +461,27 @@
       .price-box { padding: 28px 20px; }
       .price-box .price { font-size: 48px; }
     }
+    /* Gleich große Buchungs-Buttons */
+    .booking-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .booking-buttons a {
+      text-align: center;
+    }
+    @media (max-width: 520px) {
+      .booking-buttons { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
 <!-- ANNOUNCEMENT BAR -->
 <div class="announcement">
-  🔥 Early Bird: <span>Nur 149€</span> statt 197€ &nbsp;·&nbsp; <span>19.06. Hilden</span> &amp; <span>25.06. Düsseldorf</span> &nbsp;·&nbsp; Je nur <span>10 Plätze</span>
+  🔥 Early Bird: <span>Nur 149€</span> statt 197€ &nbsp;·&nbsp; <span>25.06. Düsseldorf</span> &amp; <span>19.06. Hilden</span> &nbsp;·&nbsp; Je nur <span>10 Plätze</span>
 </div>
 
 <!-- NAV -->
@@ -479,7 +498,7 @@
     Der Hands-on-Workshop für selbstständige Frauen, die KI nicht nur verstehen wollen,
     sondern die sie ab heute wirklich nutzen.
   </p>
-  <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:8px;">
+  <div class="booking-buttons">
     <a class="cta-primary" href="https://buy.stripe.com/dRm3cu53s0XwcXO0xDdIA02" target="_blank">📍 Hilden, 19.06. buchen</a>
     <a class="cta-primary" href="https://buy.stripe.com/dRm5kC9jIfSqga05RXdIA01" target="_blank">📍 Düsseldorf, 25.06. buchen</a>
   </div>
@@ -576,15 +595,15 @@
     <div class="divider"></div>
     <div class="team-grid">
       <div class="team-card">
-        <img src="_DSC4557_Retusche~2.jpg" class="team-photo" alt="Britta Heinemann" style="object-position: 50% 5%;">
-        <div class="badge">⭐ Zertifizierter KI-Manager</div>
+        <img src="britta-heinemann.jpg" class="team-photo" alt="Britta Heinemann" style="object-position: 50% 5%;">
         <h3>Britta Heinemann</h3>
+        <div class="badge">⭐ Zertifizierte KI-Managerin</div>
         <p>Marketingstrategin mit dem Blick für das große Ganze. Sie bringt Struktur in dein Business und sorgt dafür, dass deine Prozesse nicht nur laufen, sondern wirken.</p>
       </div>
       <div class="team-card">
         <img src="HANNAHKONDA Fotografie-106.jpg" class="team-photo" alt="Nadine Dross-Bütow" style="object-position: 50% 8%;">
-        <div class="badge">⭐ Zertifizierter KI-Manager</div>
         <h3>Nadine Dross-Bütow</h3>
+        <div class="badge">⭐ Zertifizierte KI-Managerin</div>
         <p>Google-zertifizierte Expertin für digitale Strategie und Online-Marketing. Sie weiß, wie Algorithmen denken, und wie du das für dein Business nutzt.</p>
       </div>
     </div>
