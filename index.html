@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dein KI-Assistent. Fertig in 3 Stunden.</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf8f4;
+      --white: #ffffff;
+      --charcoal: #1e1e1e;
+      --mid: #555550;
+      --gold: #c49a5a;
+      --gold-light: #f0e0c4;
+      --gold-dark: #a07a3a;
+      --rose: #e8d5c4;
+      --section-gap: 100px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      line-height: 1.25;
+    }
+
+    /* ── ANNOUNCEMENT BAR ── */
+    .announcement {
+      background: var(--charcoal);
+      color: var(--gold-light);
+      text-align: center;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+    .announcement span { color: #fff; font-weight: 600; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ede9e0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--charcoal);
+      text-decoration: none;
+    }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--white);
+      padding: 10px 24px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--gold-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--white);
+      padding: 90px 40px 80px;
+      text-align: center;
+      border-bottom: 1px solid #ede9e0;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 68px);
+      color: var(--charcoal);
+      max-width: 860px;
+      margin: 0 auto 24px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-sub {
+      font-size: 19px;
+      color: var(--mid);
+      max-width: 640px;
+      margin: 0 auto 44px;
+      font-weight: 300;
+    }
+    .cta-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--white);
+      font-size: 17px;
+      font-weight: 600;
+      padding: 18px 44px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background .2s, transform .15s;
+      box-shadow: 0 4px 20px rgba(196,154,90,.35);
+    }
+    .cta-primary:hover { background: var(--gold-dark); transform: translateY(-2px); }
+    .cta-sub {
+      font-size: 13px;
+      color: #999;
+      margin-top: 14px;
+    }
+    .hero-trust {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-top: 52px;
+      padding-top: 40px;
+      border-top: 1px solid #ede9e0;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--mid);
+      font-weight: 500;
+    }
+    .trust-item svg { color: var(--gold); flex-shrink: 0; }
+
+    /* ── SECTION WRAPPER ── */
+    .section { padding: var(--section-gap) 40px; }
+    .section-inner { max-width: 860px; margin: 0 auto; }
+    .section-dark { background: var(--charcoal); color: var(--white); }
+    .section-rose { background: #fdf5ee; }
+    .section-white { background: var(--white); }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .section h2 {
+      font-size: clamp(28px, 4vw, 44px);
+      margin-bottom: 32px;
+    }
+    .section-dark h2 { color: var(--white); }
+    .section-dark p, .section-dark li { color: #ccc; }
+
+    /* ── PROBLEM ── */
+    .problem-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .problem-list li {
+      padding: 20px 24px;
+      background: var(--white);
+      border-left: 4px solid var(--gold);
+      border-radius: 4px;
+      font-size: 16px;
+      color: var(--mid);
+    }
+    .problem-list li::before { content: "→ "; color: var(--gold); font-weight: 700; }
+    .problem-closing {
+      font-size: 20px;
+      font-family: 'Playfair Display', serif;
+      color: var(--charcoal);
+      font-style: italic;
+      margin-top: 8px;
+    }
+
+    /* ── SOLUTION CARDS ── */
+    .solution-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 8px;
+    }
+    .solution-card {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      padding: 32px 28px;
+    }
+    .solution-card .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .solution-card h3 {
+      font-size: 20px;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .solution-card p { font-size: 15px; color: #bbb; }
+
+    /* ── FOR WHOM ── */
+    .forwhom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-top: 8px;
+    }
+    @media (max-width: 640px) { .forwhom-grid { grid-template-columns: 1fr; } }
+    .forwhom-box {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 32px;
+      border: 1px solid #ede9e0;
+    }
+    .forwhom-box h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .forwhom-box.yes h3 { color: var(--gold-dark); }
+    .forwhom-box.no h3 { color: #888; }
+    .forwhom-box ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .forwhom-box.yes li::before { content: "✓ "; color: var(--gold); font-weight: 700; }
+    .forwhom-box.no li::before { content: "✗ "; color: #bbb; font-weight: 700; }
+    .forwhom-box li { font-size: 15px; color: var(--mid); }
+
+    /* ── TEAM ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 8px;
+    }
+    @media (max-width: 640px) { .team-grid { grid-template-columns: 1fr; } }
+    .team-card { text-align: center; }
+    .team-photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 20px;
+      display: block;
+      background: var(--gold-light);
+      border: 4px solid var(--gold);
+    }
+    .team-photo-placeholder {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gold-light);
+      border: 4px solid var(--gold);
+      font-size: 48px;
+      color: var(--gold);
+    }
+    .team-card h3 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: var(--charcoal);
+    }
+    .team-card .badge {
+      display: inline-block;
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .team-card p { font-size: 15px; color: var(--mid); }
+
+    /* ── TESTIMONIAL PLACEHOLDER ── */
+    .testimonial-placeholder {
+      background: var(--white);
+      border: 2px dashed #ddd;
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      color: #bbb;
+      font-style: italic;
+      font-size: 15px;
+    }
+    .testimonial-note {
+      margin-top: 16px;
+      font-size: 14px;
+      font-style: normal;
+      background: var(--gold-light);
+      color: var(--gold-dark);
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    /* ── VALUE STACK ── */
+    .value-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+    .value-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 16px;
+      color: var(--mid);
+      padding: 16px 20px;
+      background: var(--white);
+      border-radius: 6px;
+      border: 1px solid #ede9e0;
+    }
+    .value-list li .check {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .price-box {
+      background: var(--charcoal);
+      border-radius: 10px;
+      padding: 40px;
+      text-align: center;
+      color: var(--white);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .price-box .early { font-size: 13px; color: var(--gold); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
+    .price-box .price { font-size: 64px; font-family: 'Playfair Display', serif; color: var(--white); line-height: 1; }
+    .price-box .price span { font-size: 28px; color: #aaa; }
+    .price-box .original { font-size: 14px; color: #888; margin-top: 8px; text-decoration: line-through; }
+    .price-box .spots { margin: 20px 0; font-size: 14px; color: #aaa; }
+    .price-box .spots strong { color: var(--gold); }
+    .price-box .cta-primary { width: 100%; text-align: center; margin-top: 8px; display: block; }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+    .faq-item {
+      border-bottom: 1px solid #ede9e0;
+      padding: 24px 0;
+    }
+    .faq-item:first-child { border-top: 1px solid #ede9e0; }
+    .faq-q {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+    }
+    .faq-a { font-size: 15px; color: var(--mid); }
+
+    /* ── FINAL CTA ── */
+    .final-cta {
+      background: var(--gold);
+      padding: 90px 40px;
+      text-align: center;
+      color: var(--white);
+    }
+    .final-cta h2 {
+      font-size: clamp(28px, 5vw, 52px);
+      color: var(--white);
+      max-width: 700px;
+      margin: 0 auto 16px;
+    }
+    .final-cta p {
+      font-size: 18px;
+      color: rgba(255,255,255,.85);
+      margin-bottom: 40px;
+    }
+    .cta-ghost {
+      display: inline-block;
+      background: var(--white);
+      color: var(--gold-dark);
+      font-size: 17px;
+      font-weight: 700;
+      padding: 18px 44px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: transform .15s;
+    }
+    .cta-ghost:hover { transform: translateY(-2px); }
+    .final-details {
+      margin-top: 28px;
+      font-size: 14px;
+      color: rgba(255,255,255,.75);
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+    .final-details span::before { content: "· "; }
+    .final-details span:first-child::before { content: ""; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--charcoal);
+      padding: 32px 40px;
+      text-align: center;
+      color: #666;
+      font-size: 13px;
+    }
+    footer a { color: #888; text-decoration: none; margin: 0 12px; }
+    footer a:hover { color: var(--gold); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: var(--gold);
+      margin: 0 auto 32px;
+      border-radius: 2px;
+    }
+    .divider-left { margin: 0 0 32px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .section { padding: 70px 24px; }
+      .hero { padding: 60px 24px; }
+      nav { padding: 16px 24px; }
+      .final-cta { padding: 70px 24px; }
+      footer { padding: 24px; }
+    }
+    @media (max-width: 480px) {
+      .hero-trust { gap: 16px; }
+      .trust-item { font-size: 13px; }
+      .price-box { padding: 28px 20px; }
+      .price-box .price { font-size: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="announcement">
+  🔥 Early Bird: <span>Nur 149€</span> statt 197€ &nbsp;·&nbsp; <span>19.06. Hilden</span> &amp; <span>25.06. Düsseldorf</span> &nbsp;·&nbsp; Je nur <span>10 Plätze</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">KI-Workshop · Hilden &amp; Düsseldorf</a>
+  <a class="nav-cta" href="#anmelden">Jetzt anmelden →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Offline Workshop · 2 Termine · Hilden &amp; Düsseldorf</div>
+  <h1>Dein KI-Assistent.<br><em>Fertig in 3 Stunden.</em></h1>
+  <p class="hero-sub">
+    Der Hands-on-Workshop für selbstständige Frauen, die KI nicht nur verstehen wollen,
+    sondern die sie ab heute wirklich nutzen.
+  </p>
+  <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:8px;">
+    <a class="cta-primary" href="https://buy.stripe.com/dRm3cu53s0XwcXO0xDdIA02" target="_blank">📍 Hilden, 19.06. buchen</a>
+    <a class="cta-primary" href="https://buy.stripe.com/dRm5kC9jIfSqga05RXdIA01" target="_blank">📍 Düsseldorf, 25.06. buchen</a>
+  </div>
+  <p class="cta-sub">Early Bird 149€ · Regulär 197€ · Je nur 10 Plätze</p>
+
+  <div class="hero-trust">
+    <div class="trust-item">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      19.06. · 10:00–13:00 · Denkstation Hilden
+    </div>
+    <div class="trust-item">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      25.06. · 17:30–20:30 · Dazwischen Düsseldorf
+    </div>
+    <div class="trust-item">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      Je nur 10 Plätze
+    </div>
+    <div class="trust-item">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      2 zertifizierte KI-Managerinnen
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section section-rose">
+  <div class="section-inner">
+    <div class="section-label">Kommt dir das bekannt vor?</div>
+    <h2>Du hörst überall von KI.<br>Aber weißt nicht, wo anfangen.</h2>
+    <div class="divider divider-left"></div>
+    <ul class="problem-list">
+      <li>Du hast ChatGPT ausprobiert und dachtest: „Na ja, ganz nett…"</li>
+      <li>Du verbringst Stunden mit Aufgaben, die eigentlich jemand anderes erledigen könnte</li>
+      <li>Du weißt nicht, welche KI-Tools für dein Business wirklich relevant sind, und welche nur Zeitverschwendung</li>
+      <li>Du willst keine stundenlange Theorie. Du willst etwas, das danach sofort funktioniert.</li>
+    </ul>
+    <p class="problem-closing">Genau dafür ist dieser Workshop gebaut.</p>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="section section-dark">
+  <div class="section-inner">
+    <div class="section-label">Was passiert in 3 Stunden</div>
+    <h2>Du baust. Du verstehst. Du startest.</h2>
+    <div class="divider"></div>
+    <div class="solution-grid">
+      <div class="solution-card">
+        <div class="num">01</div>
+        <h3>Dein Custom GPT</h3>
+        <p>Keinen generischen Assistenten, sondern einen, der deine Sprache spricht, deine Branche kennt und deine häufigsten Aufgaben übernimmt.</p>
+      </div>
+      <div class="solution-card">
+        <div class="num">02</div>
+        <h3>Die richtigen Tools</h3>
+        <p>Was macht ChatGPT, was kann Canva AI, wo hilft Notion AI, und was brauchst du als Fotografin, Coach oder Kosmetikerin wirklich?</p>
+      </div>
+      <div class="solution-card">
+        <div class="num">03</div>
+        <h3>Fertiger Workflow</h3>
+        <p>Kein „ich probier das irgendwann", du verlässt den Workshop mit einem System, das du ab morgen nutzen kannst.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHOM -->
+<section class="section section-white">
+  <div class="section-inner">
+    <div class="section-label">Passt das zu dir?</div>
+    <h2>Für wen dieser Workshop gemacht ist</h2>
+    <div class="divider divider-left"></div>
+    <div class="forwhom-grid">
+      <div class="forwhom-box yes">
+        <h3>Das passt zu dir ✓</h3>
+        <ul>
+          <li>Du bist selbstständig, egal ob Coach, Fotografin, Kosmetikerin oder eine andere Branche</li>
+          <li>Du willst KI endlich praktisch nutzen, nicht nur darüber lesen</li>
+          <li>Du hast keine technischen Vorkenntnisse, und brauchst sie nicht</li>
+          <li>Du schätzt kleine Gruppen, wo wirklich auf dich eingegangen wird</li>
+          <li>Du willst nach dem Workshop sofort loslegen</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section section-rose">
+  <div class="section-inner">
+    <div class="section-label">Eure Expertinnen</div>
+    <h2 style="text-align:center">Zwei Perspektiven. Ein Ziel.</h2>
+    <div class="divider"></div>
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="_DSC4557_Retusche~2.jpg" class="team-photo" alt="Britta Heinemann" style="object-position: 50% 5%;">
+        <div class="badge">⭐ Zertifizierter KI-Manager</div>
+        <h3>Britta Heinemann</h3>
+        <p>Marketingstrategin mit dem Blick für das große Ganze. Sie bringt Struktur in dein Business und sorgt dafür, dass deine Prozesse nicht nur laufen, sondern wirken.</p>
+      </div>
+      <div class="team-card">
+        <img src="HANNAHKONDA Fotografie-106.jpg" class="team-photo" alt="Nadine Dross-Bütow" style="object-position: 50% 8%;">
+        <div class="badge">⭐ Zertifizierter KI-Manager</div>
+        <h3>Nadine Dross-Bütow</h3>
+        <p>Google-zertifizierte Expertin für digitale Strategie und Online-Marketing. Sie weiß, wie Algorithmen denken, und wie du das für dein Business nutzt.</p>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top:36px; font-size:16px; color:var(--mid); font-style:italic;">
+      Zusammen: Zwei Perspektiven. Ein Ziel, dass du nach diesem Workshop mit KI arbeitest,<br>als hättest du eine Assistentin. Ohne eine einzustellen.
+    </p>
+  </div>
+</section>
+
+
+<!-- VALUE STACK + PRICE -->
+<section class="section section-rose" id="anmelden">
+  <div class="section-inner">
+    <div class="section-label">Dein Investment</div>
+    <h2>Was du mit nach Hause nimmst</h2>
+    <div class="divider divider-left"></div>
+    <ul class="value-list">
+      <li><span class="check">✓</span> Dein fertiger, personalisierter Custom GPT</li>
+      <li><span class="check">✓</span> Eine Übersicht der besten KI-Tools für deine Branche</li>
+      <li><span class="check">✓</span> Einen konkreten Workflow zur Automatisierung deiner häufigsten Aufgaben</li>
+      <li><span class="check">✓</span> 3 Stunden mit zwei zertifizierten KI-Managerinnen, nur 10 Plätze</li>
+      <li><span class="check">✓</span> Einen Platz in einer Gruppe Gleichgesinnter</li>
+    </ul>
+    <div class="price-box">
+      <div class="early">🔥 Early Bird Preis</div>
+      <div class="price">149€<span> zzgl. MwSt.</span></div>
+      <div class="original">Regulär 197€ · je nur 10 Plätze pro Termin</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px;">
+        <div style="background:rgba(255,255,255,.06); border-radius:8px; padding:16px 12px;">
+          <div style="font-size:12px; color:var(--gold-light); font-weight:600; margin-bottom:4px;">📍 Hilden</div>
+          <div style="font-size:13px; color:#fff; font-weight:600; margin-bottom:2px;">Denkstation</div>
+          <div style="font-size:12px; color:#aaa; margin-bottom:12px;">19. Juni · 10:00–13:00 Uhr</div>
+          <a class="cta-primary" href="https://buy.stripe.com/dRm3cu53s0XwcXO0xDdIA02" target="_blank" style="display:block; text-align:center; padding:12px 8px; font-size:14px;">Hilden buchen →</a>
+        </div>
+        <div style="background:rgba(255,255,255,.06); border-radius:8px; padding:16px 12px;">
+          <div style="font-size:12px; color:var(--gold-light); font-weight:600; margin-bottom:4px;">📍 Düsseldorf</div>
+          <div style="font-size:13px; color:#fff; font-weight:600; margin-bottom:2px;">Dazwischen</div>
+          <div style="font-size:12px; color:#aaa; margin-bottom:12px;">25. Juni · 17:30–20:30 Uhr</div>
+          <a class="cta-primary" href="https://buy.stripe.com/dRm5kC9jIfSqga05RXdIA01" target="_blank" style="display:block; text-align:center; padding:12px 8px; font-size:14px;">Düsseldorf buchen →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-white">
+  <div class="section-inner">
+    <div class="section-label">Häufige Fragen</div>
+    <h2>Alles, was du noch wissen willst</h2>
+    <div class="divider divider-left"></div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <p class="faq-q">„Ich bin nicht technisch affin, ist das trotzdem was für mich?"</p>
+        <p class="faq-a">Ja. Wir setzen null Vorkenntnisse voraus. Wenn du ein Smartphone bedienen kannst, kannst du mitmachen. Versprochen.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">„Was brauche ich für den Workshop?"</p>
+        <p class="faq-a">Nur deinen Laptop und einen kostenlosen ChatGPT-Account. Den Rest erklären wir vor Ort.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">„Was ist ein Custom GPT überhaupt?"</p>
+        <p class="faq-a">Dein persönlicher KI-Assistent, den du mit deinen Infos, deiner Sprache und deinen Aufgaben trainierst, so dass er wirklich für dein Business funktioniert. Kein generischer Bot, sondern deiner.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">„Warum nur 10 Plätze?"</p>
+        <p class="faq-a">Weil wir mit euch arbeiten wollen, nicht vor euch. Jede bekommt individuelle Aufmerksamkeit und einen Custom GPT, der wirklich zu ihrer Branche passt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Dein Platz wartet,<br>aber nicht lange.</h2>
+  <p>Je nur 10 Plätze · Early Bird 149€ · Zwei Termine zur Auswahl</p>
+  <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+    <a class="cta-ghost" href="https://buy.stripe.com/dRm3cu53s0XwcXO0xDdIA02" target="_blank">📍 Hilden, 19.06. buchen</a>
+    <a class="cta-ghost" href="https://buy.stripe.com/dRm5kC9jIfSqga05RXdIA01" target="_blank">📍 Düsseldorf, 25.06. buchen</a>
+  </div>
+  <div class="final-details">
+    <span>19.06.2026 · 10:00–13:00 · Denkstation Hilden</span>
+    <span>25.06.2026 · 17:30–20:30 · Dazwischen Düsseldorf</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:12px;">
+    <a href="#">Nadine Dross-Bütow</a>
+    <a href="#">Britta Heinemann</a>
+    <a href="#">Impressum</a>
+    <a href="#">Datenschutz</a>
+  </p>
+  <p>© 2026 · KI-Workshop Hilden &amp; Düsseldorf · Alle Rechte vorbehalten</p>
+</footer>
+
+</body>
+</html>
