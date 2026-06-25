@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KI-Workshops · Basis, Fortgeschrittene & Claude intensiv</title>
+  <link href="https://fonts.bunny.net/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #faf8f4;
+      --white: #ffffff;
+      --charcoal: #1e1e1e;
+      --mid: #555550;
+      --gold: #c49a5a;
+      --gold-light: #f0e0c4;
+      --gold-dark: #a07a3a;
+      --basis: #4a7c6f;
+      --basis-light: #e8f4f1;
+      --fort: #c49a5a;
+      --fort-light: #f0e0c4;
+      --claude: #6b5b9a;
+      --claude-light: #ede9f8;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--charcoal); line-height: 1.7; font-size: 16px; }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.25; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--white); padding: 20px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid #ede9e0; position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--charcoal); text-decoration: none; }
+    .nav-cta { background: var(--gold); color: var(--white); padding: 10px 24px; border-radius: 4px; text-decoration: none; font-size: 14px; font-weight: 600; transition: background .2s; white-space: nowrap; }
+    .nav-cta:hover { background: var(--gold-dark); }
+    @media (max-width: 480px) { .nav-cta { padding: 7px 14px; font-size: 12px; } .nav-logo { font-size: 14px; } }
+
+    /* ── HERO ── */
+    .hero { background: var(--white); padding: 90px 40px 80px; text-align: center; border-bottom: 1px solid #ede9e0; }
+    .hero-eyebrow { display: inline-block; background: var(--gold-light); color: var(--gold-dark); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 18px; border-radius: 20px; margin-bottom: 28px; }
+    .hero h1 { font-size: clamp(32px, 6vw, 62px); color: var(--charcoal); max-width: 860px; margin: 0 auto 24px; }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero-sub { font-size: 19px; color: var(--mid); max-width: 640px; margin: 0 auto 52px; font-weight: 300; }
+
+    /* ── WORKSHOP OVERVIEW CARDS ── */
+    .overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 960px; margin: 0 auto; }
+    @media (max-width: 768px) { .overview-grid { grid-template-columns: 1fr; max-width: 480px; } }
+    .overview-card { border-radius: 10px; padding: 32px 28px; text-align: center; border: 2px solid transparent; transition: transform .2s; cursor: pointer; text-decoration: none; display: block; }
+    .overview-card:hover { transform: translateY(-4px); }
+    .overview-card.basis { background: var(--basis-light); border-color: var(--basis); }
+    .overview-card.fort { background: var(--fort-light); border-color: var(--fort); }
+    .overview-card.claude { background: var(--claude-light); border-color: var(--claude); }
+    .overview-card .level { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 10px; }
+    .overview-card.basis .level { color: var(--basis); }
+    .overview-card.fort .level { color: var(--gold-dark); }
+    .overview-card.claude .level { color: var(--claude); }
+    .overview-card h3 { font-size: 22px; margin-bottom: 12px; color: var(--charcoal); }
+    .overview-card p { font-size: 14px; color: var(--mid); margin-bottom: 20px; }
+    .overview-card .price-tag { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--charcoal); }
+    .overview-card .price-tag span { font-family: 'Inter', sans-serif; font-size: 13px; color: #999; font-weight: 400; }
+    .card-link { display: inline-block; font-size: 13px; font-weight: 600; margin-top: 16px; padding: 8px 20px; border-radius: 4px; text-decoration: none; }
+    .overview-card.basis .card-link { background: var(--basis); color: #fff; }
+    .overview-card.fort .card-link { background: var(--gold); color: #fff; }
+    .overview-card.claude .card-link { background: var(--claude); color: #fff; }
+
+    /* ── SECTION ── */
+    .section { padding: 90px 40px; }
+    .section-inner { max-width: 860px; margin: 0 auto; }
+    .section-white { background: var(--white); }
+    .section-cream { background: var(--cream); }
+    .section-dark { background: var(--charcoal); }
+    .section-label { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
+    .label-basis { color: var(--basis); }
+    .label-fort { color: var(--gold); }
+    .label-claude { color: var(--claude); }
+    .section h2 { font-size: clamp(26px, 4vw, 40px); margin-bottom: 12px; }
+    .section h2 em { font-style: normal; }
+    .h2-basis em { color: var(--basis); }
+    .h2-fort em { color: var(--gold); }
+    .h2-claude em { color: var(--claude); }
+    .section-tagline { font-size: 17px; color: var(--mid); margin-bottom: 36px; font-weight: 300; }
+
+    .divider { width: 60px; height: 3px; border-radius: 2px; margin: 0 0 36px; }
+    .divider-basis { background: var(--basis); }
+    .divider-fort { background: var(--gold); }
+    .divider-claude { background: var(--claude); }
+
+    /* ── WORKSHOP HEADER BAR ── */
+    .workshop-bar { border-radius: 10px; padding: 28px 36px; margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .workshop-bar.basis { background: var(--basis-light); border-left: 5px solid var(--basis); }
+    .workshop-bar.fort { background: var(--fort-light); border-left: 5px solid var(--fort); }
+    .workshop-bar.claude { background: var(--claude-light); border-left: 5px solid var(--claude); }
+    .workshop-bar-info { display: flex; gap: 28px; flex-wrap: wrap; }
+    .bar-item { font-size: 14px; color: var(--mid); display: flex; align-items: center; gap: 6px; }
+    .bar-item strong { color: var(--charcoal); }
+    .bar-price { font-family: 'Playfair Display', serif; font-size: 36px; color: var(--charcoal); white-space: nowrap; }
+    .bar-price span { font-family: 'Inter', sans-serif; font-size: 13px; color: #999; font-weight: 400; }
+
+    /* ── CONTENT LIST ── */
+    .content-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+    .content-list li { display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: var(--mid); padding: 14px 20px; background: var(--white); border-radius: 6px; border: 1px solid #ede9e0; }
+    .content-list li .icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .content-list li strong { display: block; color: var(--charcoal); font-weight: 600; margin-bottom: 2px; }
+
+    /* ── WORKSHOP CTA ── */
+    .workshop-cta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .btn { display: inline-block; padding: 16px 36px; border-radius: 6px; font-size: 16px; font-weight: 600; text-decoration: none; transition: transform .15s, background .2s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-basis { background: var(--basis); color: #fff; }
+    .btn-basis:hover { background: #3d6b5f; }
+    .btn-fort { background: var(--gold); color: #fff; }
+    .btn-fort:hover { background: var(--gold-dark); }
+    .btn-claude { background: var(--claude); color: #fff; }
+    .btn-claude:hover { background: #5a4a87; }
+    .btn-ghost { background: transparent; color: var(--mid); font-size: 14px; padding: 0; }
+    .btn-ghost:hover { color: var(--charcoal); transform: none; }
+
+    /* ── BUNDLE SECTION ── */
+    .bundle-section { background: var(--charcoal); padding: 90px 40px; }
+    .bundle-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .bundle-inner .section-label { color: var(--gold); margin-bottom: 12px; }
+    .bundle-inner h2 { font-size: clamp(28px, 5vw, 48px); color: var(--white); margin-bottom: 16px; }
+    .bundle-inner > p { font-size: 17px; color: #aaa; margin-bottom: 52px; }
+    .bundle-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 768px) { .bundle-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; } }
+    .bundle-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: 32px 24px; position: relative; }
+    .bundle-card.highlight { background: var(--gold); border-color: var(--gold); }
+    .bundle-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--gold-dark); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; white-space: nowrap; }
+    .bundle-card.highlight .bundle-badge { background: var(--charcoal); }
+    .bundle-workshops { font-size: 13px; color: #aaa; margin-bottom: 16px; }
+    .bundle-card.highlight .bundle-workshops { color: rgba(255,255,255,.75); }
+    .bundle-price { font-family: 'Playfair Display', serif; font-size: 52px; color: var(--white); line-height: 1; margin-bottom: 6px; }
+    .bundle-card.highlight .bundle-price { color: var(--white); }
+    .bundle-save { font-size: 13px; color: var(--gold-light); margin-bottom: 24px; }
+    .bundle-card.highlight .bundle-save { color: rgba(255,255,255,.85); }
+    .bundle-includes { list-style: none; text-align: left; margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
+    .bundle-includes li { font-size: 14px; color: #ccc; display: flex; align-items: center; gap: 8px; }
+    .bundle-includes li::before { content: "✓"; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+    .bundle-card.highlight .bundle-includes li { color: rgba(255,255,255,.9); }
+    .bundle-card.highlight .bundle-includes li::before { color: rgba(255,255,255,.8); }
+    .bundle-btn { display: block; padding: 14px; border-radius: 6px; font-size: 15px; font-weight: 600; text-align: center; text-decoration: none; transition: background .2s; }
+    .bundle-btn-default { background: rgba(255,255,255,.1); color: #fff; }
+    .bundle-btn-default:hover { background: rgba(255,255,255,.18); }
+    .bundle-btn-highlight { background: var(--charcoal); color: #fff; }
+    .bundle-btn-highlight:hover { background: #333; }
+
+    /* ── TEAM ── */
+    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 8px; }
+    @media (max-width: 640px) { .team-grid { grid-template-columns: 1fr; } }
+    .team-card { text-align: center; }
+    .team-photo { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; margin: 0 auto 20px; display: block; border: 4px solid var(--gold); }
+    .team-card h3 { font-size: 22px; margin-bottom: 8px; color: var(--charcoal); }
+    .team-card .badge { display: inline-block; background: var(--gold-light); color: var(--gold-dark); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; }
+    .team-card p { font-size: 15px; color: var(--mid); }
+
+    /* ── FAQ ── */
+    .faq-item { border-bottom: 1px solid #ede9e0; padding: 24px 0; }
+    .faq-item:first-child { border-top: 1px solid #ede9e0; }
+    .faq-q { font-family: 'Playfair Display', serif; font-size: 18px; color: var(--charcoal); margin-bottom: 10px; }
+    .faq-a { font-size: 15px; color: var(--mid); }
+
+    /* ── FOOTER CTA ── */
+    .footer-cta { background: var(--gold); padding: 80px 40px; text-align: center; }
+    .footer-cta h2 { font-size: clamp(26px, 5vw, 46px); color: var(--white); max-width: 680px; margin: 0 auto 16px; }
+    .footer-cta p { font-size: 17px; color: rgba(255,255,255,.85); margin-bottom: 36px; }
+    .footer-cta-btns { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+    .btn-white { background: var(--white); color: var(--gold-dark); display: inline-block; padding: 16px 36px; border-radius: 6px; font-size: 16px; font-weight: 700; text-decoration: none; transition: transform .15s; }
+    .btn-white:hover { transform: translateY(-2px); }
+    .btn-outline-white { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); display: inline-block; padding: 14px 34px; border-radius: 6px; font-size: 16px; font-weight: 600; text-decoration: none; transition: border-color .2s; }
+    .btn-outline-white:hover { border-color: #fff; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--charcoal); padding: 32px 40px; text-align: center; color: #666; font-size: 13px; }
+    footer a { color: #888; text-decoration: none; margin: 0 12px; }
+    footer a:hover { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .section { padding: 70px 24px; }
+      .hero { padding: 60px 24px; }
+      nav { padding: 16px 24px; }
+      .bundle-section { padding: 70px 24px; }
+      .footer-cta { padding: 60px 24px; }
+      footer { padding: 24px; }
+      .workshop-bar { padding: 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">KI-Workshops · Basis bis Intensiv</a>
+  <a class="nav-cta" href="#workshops">Alle Workshops →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Online Workshops · 3 Level · Dein Tempo</div>
+  <h1>KI verstehen.<br><em>Wirklich nutzen.</em></h1>
+  <p class="hero-sub">
+    Drei Workshops, die aufeinander aufbauen — oder einzeln gebucht werden können.
+    Von den Grundlagen bis zum eigenen KI-Agenten und der Website mit Claude Code.
+  </p>
+
+  <div class="overview-grid" id="workshops">
+    <a class="overview-card basis" href="#basis">
+      <div class="level">Level 1 · Basis</div>
+      <h3>KI Basis</h3>
+      <p>Wie KI funktioniert, Ethik, Datenschutz, richtig prompten, Tool-Überblick</p>
+      <div class="price-tag">99€ <span>zzgl. MwSt.</span></div>
+      <span class="card-link">Mehr erfahren ↓</span>
+    </a>
+    <a class="overview-card fort" href="#fortgeschrittene">
+      <div class="level">Level 2 · Fortgeschrittene</div>
+      <h3>KI Fortgeschrittene</h3>
+      <p>KI-Assistenten bauen, Zielgruppe analysieren, Automatisierung, Sichtbarkeit</p>
+      <div class="price-tag">99€ <span>zzgl. MwSt.</span></div>
+      <span class="card-link">Mehr erfahren ↓</span>
+    </a>
+    <a class="overview-card claude" href="#claude">
+      <div class="level">Level 3 · Intensiv</div>
+      <h3>KI Claude intensiv</h3>
+      <p>Claude komplett, alle Tools verstehen, Website mit Claude Code erstellen</p>
+      <div class="price-tag">99€ <span>zzgl. MwSt.</span></div>
+      <span class="card-link">Mehr erfahren ↓</span>
+    </a>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────
+     WORKSHOP 1: KI BASIS
+──────────────────────────────────────────── -->
+<section class="section section-white" id="basis">
+  <div class="section-inner">
+    <div class="section-label label-basis">Level 1 · Für Einsteigerinnen</div>
+    <h2 class="h2-basis"><em>KI Basis</em> — Verstehen, was dahintersteckt</h2>
+    <p class="section-tagline">Der ideale Einstieg: Du weißt danach, wie KI wirklich funktioniert — und was du damit anfangen kannst.</p>
+    <div class="divider divider-basis"></div>
+
+    <div class="workshop-bar basis">
+      <div class="workshop-bar-info">
+        <div class="bar-item">⏱ <strong>ca. 3 Stunden</strong></div>
+        <div class="bar-item">💻 <strong>Online</strong></div>
+        <div class="bar-item">👩‍💻 <strong>Kleine Gruppe</strong></div>
+        <div class="bar-item">📅 <strong>[DATUM folgt]</strong></div>
+      </div>
+      <div class="bar-price">99€ <span>zzgl. MwSt.</span></div>
+    </div>
+
+    <ul class="content-list">
+      <li>
+        <span class="icon">🔍</span>
+        <div><strong>Wie KI funktioniert und sucht</strong>
+        Was steckt wirklich hinter ChatGPT, Claude & Co.? Du verstehst die Logik, damit du die Werkzeuge richtig einsetzt.</div>
+      </li>
+      <li>
+        <span class="icon">⚖️</span>
+        <div><strong>Ethik & Datenschutz</strong>
+        Was darf ich eingeben, was nicht? Wie gehe ich mit Kundendaten um? Rechtliche Grundlagen ohne Juristendeutsch.</div>
+      </li>
+      <li>
+        <span class="icon">✍️</span>
+        <div><strong>Richtig prompten</strong>
+        Warum bekommst du manchmal gute und manchmal schlechte Ergebnisse? Du lernst die Struktur, die den Unterschied macht.</div>
+      </li>
+      <li>
+        <span class="icon">⚙️</span>
+        <div><strong>Grundlagen & Einstellungen</strong>
+        Wie richtest du ein KI-Tool so ein, dass es wirklich zu dir und deinem Business passt?</div>
+      </li>
+      <li>
+        <span class="icon">🧰</span>
+        <div><strong>Tool-Überblick</strong>
+        Welche KI-Tools gibt es, worin unterscheiden sie sich und welche sind für dein Business relevant?</div>
+      </li>
+    </ul>
+
+    <div class="workshop-cta">
+      <a class="btn btn-basis" href="#LINK-BASIS-EINTRAGEN">Jetzt für KI Basis eintragen →</a>
+      <a class="btn btn-ghost" href="#bundle">Alle 3 Workshops gemeinsam buchen & sparen</a>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────
+     WORKSHOP 2: KI FORTGESCHRITTENE
+──────────────────────────────────────────── -->
+<section class="section section-cream" id="fortgeschrittene">
+  <div class="section-inner">
+    <div class="section-label label-fort">Level 2 · Mit Grundkenntnissen</div>
+    <h2 class="h2-fort"><em>KI Fortgeschrittene</em> — Deinen eigenen KI-Assistenten bauen</h2>
+    <p class="section-tagline">Du kennst KI schon ein bisschen und willst mehr. In diesem Workshop baust du deinen persönlichen KI-Assistenten und lernst, wie KI dein Business sichtbarer macht.</p>
+    <div class="divider divider-fort"></div>
+
+    <div class="workshop-bar fort">
+      <div class="workshop-bar-info">
+        <div class="bar-item">⏱ <strong>ca. 3 Stunden</strong></div>
+        <div class="bar-item">💻 <strong>Online</strong></div>
+        <div class="bar-item">👩‍💻 <strong>Kleine Gruppe</strong></div>
+        <div class="bar-item">📅 <strong>[DATUM folgt]</strong></div>
+      </div>
+      <div class="bar-price">99€ <span>zzgl. MwSt.</span></div>
+    </div>
+
+    <ul class="content-list">
+      <li>
+        <span class="icon">🤖</span>
+        <div><strong>KI-Assistenten bauen — Custom GPT oder Claude-Projekt</strong>
+        Mit den 18 entscheidenden Fragen erstellst du deinen persönlichen KI-Assistenten, der deine Sprache spricht und deine Aufgaben kennt.</div>
+      </li>
+      <li>
+        <span class="icon">🎯</span>
+        <div><strong>Anweisungen in den Einstellungen</strong>
+        Wie du deinen Assistenten so konfigurierst, dass er immer in deinem Stil antwortet — ohne ständige Erklärungen.</div>
+      </li>
+      <li>
+        <span class="icon">👥</span>
+        <div><strong>Zielgruppe analysieren & Content-Ideen generieren</strong>
+        KI als Sparringpartnerin für deine Positionierung: Wer sind deine Wunschkundinnen und welche Themen bewegen sie?</div>
+      </li>
+      <li>
+        <span class="icon">⚡</span>
+        <div><strong>Automatisierung</strong>
+        Welche deiner wiederkehrenden Aufgaben kannst du ab morgen an KI übergeben? Konkrete Workflows für dein Business.</div>
+      </li>
+      <li>
+        <span class="icon">🔄</span>
+        <div><strong>Beispiele für Prozessoptimierungen</strong>
+        Praxisbeispiele aus Marketing, Beratung, Coaching und anderen Branchen — direkt übertragbar auf deine Arbeit.</div>
+      </li>
+      <li>
+        <span class="icon">📈</span>
+        <div><strong>Sichtbarkeit & Kundengewinnung mit KI</strong>
+        Wie KI dir hilft, mehr Content zu erstellen, besser gefunden zu werden und neue Kundinnen anzuziehen.</div>
+      </li>
+    </ul>
+
+    <div class="workshop-cta">
+      <a class="btn btn-fort" href="#LINK-FORT-EINTRAGEN">Jetzt für KI Fortgeschrittene eintragen →</a>
+      <a class="btn btn-ghost" href="#bundle">Alle 3 Workshops gemeinsam buchen & sparen</a>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────
+     WORKSHOP 3: KI CLAUDE INTENSIV
+──────────────────────────────────────────── -->
+<section class="section section-white" id="claude">
+  <div class="section-inner">
+    <div class="section-label label-claude">Level 3 · Intensiv</div>
+    <h2 class="h2-claude"><em>KI Claude intensiv</em> — Das volle Potenzial von Claude</h2>
+    <p class="section-tagline">Ein Deep Dive in das KI-Tool, das Profis nutzen: Claude. Du lernst alle Funktionen kennen und erstellst am Ende deine eigene Website — live, in einer Session.</p>
+    <div class="divider divider-claude"></div>
+
+    <div class="workshop-bar claude">
+      <div class="workshop-bar-info">
+        <div class="bar-item">⏱ <strong>ca. 3 Stunden</strong></div>
+        <div class="bar-item">💻 <strong>Online</strong></div>
+        <div class="bar-item">👩‍💻 <strong>Kleine Gruppe</strong></div>
+        <div class="bar-item">📅 <strong>[DATUM folgt]</strong></div>
+      </div>
+      <div class="bar-price">99€ <span>zzgl. MwSt.</span></div>
+    </div>
+
+    <ul class="content-list">
+      <li>
+        <span class="icon">🟠</span>
+        <div><strong>Claude komplett — Vorstellung aller Funktionen</strong>
+        Was kann Claude, was andere nicht können? Ein vollständiger Überblick über das Tool, das Profis weltweit nutzen.</div>
+      </li>
+      <li>
+        <span class="icon">🔀</span>
+        <div><strong>Die Unterschiede: Chat, Cowork, Code & Design</strong>
+        Claude hat vier verschiedene Bereiche — du lernst, welcher für welche Aufgabe gemacht ist und wie du sie kombinierst.</div>
+      </li>
+      <li>
+        <span class="icon">🗺️</span>
+        <div><strong>Was man mit was machen kann</strong>
+        Konkrete Use Cases: Welche Aufgaben erledigst du am besten in welchem Modus? Dein persönlicher Fahrplan für Claude.</div>
+      </li>
+      <li>
+        <span class="icon">🌐</span>
+        <div><strong>Website mit Claude Code erstellen — live</strong>
+        Du erstellst in dieser Session deine eigene Website mit Claude Code. Kein Vorwissen nötig — nur Laptop und Idee.</div>
+      </li>
+    </ul>
+
+    <div class="workshop-cta">
+      <a class="btn btn-claude" href="#LINK-CLAUDE-EINTRAGEN">Jetzt für KI Claude intensiv eintragen →</a>
+      <a class="btn btn-ghost" href="#bundle">Alle 3 Workshops gemeinsam buchen & sparen</a>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────────────
+     BUNDLE PRICING
+──────────────────────────────────────────── -->
+<section class="bundle-section" id="bundle">
+  <div class="bundle-inner">
+    <div class="section-label">Sparpakete</div>
+    <h2>Mehr lernen, weniger zahlen.</h2>
+    <p>Buchst du mehrere Workshops, sparst du automatisch. Wähle dein Paket:</p>
+
+    <div class="bundle-grid">
+      <div class="bundle-card">
+        <div class="bundle-workshops">1 Workshop</div>
+        <div class="bundle-price">99€</div>
+        <div class="bundle-save" style="color:#777;">zzgl. MwSt. · kein Rabatt</div>
+        <ul class="bundle-includes">
+          <li>1 Workshop deiner Wahl</li>
+          <li>ca. 3 Stunden online</li>
+          <li>Kleine Gruppe</li>
+        </ul>
+        <a class="bundle-btn bundle-btn-default" href="#workshops">Workshop wählen →</a>
+      </div>
+
+      <div class="bundle-card highlight">
+        <div class="bundle-badge">Beliebt</div>
+        <div class="bundle-workshops">2 Workshops</div>
+        <div class="bundle-price">179€</div>
+        <div class="bundle-save">zzgl. MwSt. · Du sparst 19€</div>
+        <ul class="bundle-includes">
+          <li>2 Workshops deiner Wahl</li>
+          <li>je ca. 3 Stunden online</li>
+          <li>Kleine Gruppe</li>
+          <li>Ideal: Basis + Fortgeschrittene</li>
+        </ul>
+        <a class="bundle-btn bundle-btn-highlight" href="#LINK-2ER-BUNDLE">2er-Paket buchen →</a>
+      </div>
+
+      <div class="bundle-card">
+        <div class="bundle-badge">Bestes Angebot</div>
+        <div class="bundle-workshops">Alle 3 Workshops</div>
+        <div class="bundle-price">249€</div>
+        <div class="bundle-save">zzgl. MwSt. · Du sparst 48€</div>
+        <ul class="bundle-includes">
+          <li>Alle 3 Workshops</li>
+          <li>je ca. 3 Stunden online</li>
+          <li>Kleine Gruppe</li>
+          <li>Komplett von Basis bis Profi</li>
+        </ul>
+        <a class="bundle-btn bundle-btn-default" href="#LINK-3ER-BUNDLE">Alle 3 buchen →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section section-white" style="background:#fdf5ee;">
+  <div class="section-inner">
+    <div class="section-label" style="color:var(--gold); text-align:center;">Eure Expertinnen</div>
+    <h2 style="text-align:center; margin-bottom:8px;">Zwei Perspektiven. Ein Ziel.</h2>
+    <div style="width:60px; height:3px; background:var(--gold); border-radius:2px; margin:0 auto 40px;"></div>
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="britta-heinemann.jpg" class="team-photo" alt="Britta Heinemann" style="object-position:50% 5%;">
+        <h3>Britta Heinemann</h3>
+        <div class="badge">⭐ Zertifizierte KI-Managerin</div>
+        <p>Marketingstrategin mit dem Blick für das große Ganze. Sie bringt Struktur in dein Business und sorgt dafür, dass deine Prozesse nicht nur laufen, sondern wirken.</p>
+      </div>
+      <div class="team-card">
+        <img src="HANNAHKONDA Fotografie-106.jpg" class="team-photo" alt="Nadine Dross-Bütow" style="object-position:50% 8%;">
+        <h3>Nadine Dross-Bütow</h3>
+        <div class="badge">⭐ Zertifizierte KI-Managerin</div>
+        <p>Google-zertifizierte Expertin für digitale Strategie und Online-Marketing. Sie weiß, wie Algorithmen denken, und wie du das für dein Business nutzt.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section section-white">
+  <div class="section-inner">
+    <div class="section-label" style="color:var(--gold);">Häufige Fragen</div>
+    <h2>Alles, was du noch wissen willst</h2>
+    <div style="width:60px; height:3px; background:var(--gold); border-radius:2px; margin:0 0 40px;"></div>
+    <div>
+      <div class="faq-item">
+        <p class="faq-q">„Muss ich die Workshops in Reihenfolge buchen?"</p>
+        <p class="faq-a">Nein. Jeder Workshop funktioniert auch einzeln. Wenn du aber ganz neu mit KI startest, empfehlen wir KI Basis als Einstieg. Für Claude intensiv sind Grundkenntnisse hilfreich, aber nicht Pflicht.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">„Ich bin nicht technisch affin — ist das trotzdem was für mich?"</p>
+        <p class="faq-a">Ja. Wir setzen null Vorkenntnisse voraus. Wenn du ein Smartphone bedienen kannst, kannst du mitmachen. Versprochen.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">„Was brauche ich für die Workshops?"</p>
+        <p class="faq-a">Nur einen Laptop mit Internetverbindung. Für Claude intensiv empfehlen wir einen kostenlosen Claude-Account (claude.ai). Alles andere erklären wir.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">„Wann finden die Workshops statt?"</p>
+        <p class="faq-a">Die Termine stehen noch nicht fest. Trag dich über den jeweiligen Workshop-Button ein und du bekommst als Erste Bescheid, sobald die Terminplanung steht.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">„Kann ich einen Workshop als Einzelperson und einen als Bundle buchen?"</p>
+        <p class="faq-a">Am einfachsten buchst du direkt das passende Bundle — so sparst du automatisch. Bei Fragen melde dich gerne per E-Mail bei uns.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta">
+  <h2>Bereit, KI wirklich für dich arbeiten zu lassen?</h2>
+  <p>Trag dich ein — wir melden uns mit allen Terminen und Details.</p>
+  <div class="footer-cta-btns">
+    <a class="btn-white" href="#workshops">Workshops ansehen</a>
+    <a class="btn-outline-white" href="#bundle">Sparpakete sehen</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:12px;">
+    <a href="https://drossbuetow-marketing.de/" target="_blank">Nadine Dross-Bütow</a>
+    <a href="https://brittaheinemann.de/" target="_blank">Britta Heinemann</a>
+  </p>
+  <p style="margin-bottom:8px;">
+    <a href="impressum.html">Impressum</a>
+    <a href="datenschutz.html">Datenschutz</a>
+  </p>
+  <p>© 2026 · KI-Workshops · Alle Rechte vorbehalten</p>
+</footer>
+
+</body>
+</html>
