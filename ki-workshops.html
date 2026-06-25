@@ -174,18 +174,12 @@ document.addEventListener('DOMContentLoaded', async function() {
       'nav>div>a:first-child,nav>div>a:nth-child(2){display:none !important}' +
       'h1{font-size:32px !important;line-height:1.15 !important}' +
       'h2{font-size:26px !important;line-height:1.2 !important}' +
-      'section{display:block !important}' +
-      'section>div{width:100% !important;min-width:0 !important}' +
-      'section[style*="overflow:hidden"]>div:first-child{padding:52px 24px !important}' +
-      'section[style*="overflow:hidden"]>div:last-child img{width:100% !important;height:280px !important;object-fit:cover !important;display:block !important}' +
-      'section[style*="padding:88px 64px"]{padding:52px 24px !important}' +
-      'div[style*="grid-template-columns:1fr 1fr 1fr"]{grid-template-columns:1fr !important;display:grid !important}' +
-      'div[style*="grid-template-columns:210px 1fr"]{grid-template-columns:1fr !important;display:grid !important}' +
-      'div[style*="grid-template-columns:210px 1fr"] img{height:240px !important;width:100% !important;object-fit:cover !important}' +
-      'section[id="waitlist"]>div:first-child{display:none !important}' +
-      'section[id="waitlist"]>div:last-child{padding:52px 24px !important}' +
+      'section{display:block !important;padding-left:20px !important;padding-right:20px !important;padding-top:52px !important;padding-bottom:52px !important;min-height:auto !important}' +
+      'section>div,section>article{width:100% !important;min-width:0 !important;max-width:100% !important}' +
+      '[style*="grid-template-columns"]{grid-template-columns:1fr !important}' +
+      '[style*="overflow:hidden"]>div:last-child img,[style*="overflow:hidden"]>div:last-child picture{width:100% !important;height:280px !important;object-fit:cover !important;display:block !important}' +
       'footer{flex-direction:column !important;gap:14px !important;padding:28px 20px !important;text-align:center !important}' +
-      'div[style*="max-width:1080px"],div[style*="max-width:900px"],div[style*="max-width:1000px"],div[style*="max-width:820px"]{max-width:100% !important}' +
+      '[style*="max-width"]{max-width:100% !important}' +
     '}';
     document.head.appendChild(rs);
 
