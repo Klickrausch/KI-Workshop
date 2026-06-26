@@ -156,12 +156,12 @@ document.addEventListener('DOMContentLoaded', async function() {
       'section{display:block!important;padding:52px 20px!important;min-height:auto!important}' +
       'section>div,section>article{width:100%!important;min-width:0!important}' +
       '[style*="grid-template-columns"]{grid-template-columns:1fr!important}' +
-      'section[style*="overflow:hidden"]>div:last-child{display:block!important;min-height:320px!important;position:relative!important}' +
-      'section[style*="overflow:hidden"]>div:first-child{padding:52px 24px!important}' +
+      'section[style*="overflow:hidden"]{display:grid!important;grid-template-columns:1fr!important;grid-template-rows:auto 320px!important;padding:0!important;min-height:auto!important}' +
+      'section[style*="overflow:hidden"]>div:first-child{padding:52px 24px!important;width:100%!important}' +
       'section[id="waitlist"]>div:first-child{display:block!important;min-height:300px!important;position:relative!important}' +
       'section[id="waitlist"]>div:last-child{padding:32px 20px!important}' +
-      'img[alt="Britta Heinemann"]{object-position:top!important;height:280px!important}' +
-      'img[alt="Nadine Dross-Bütow"]{object-position:top!important;height:280px!important}' +
+      'img[alt="Britta Heinemann"]{object-position:50% 10%!important;height:280px!important}' +
+      'img[alt="Nadine Dross-Bütow"]{object-position:50% 10%!important;height:280px!important}' +
       'footer{flex-direction:column!important;gap:14px!important;padding:28px 20px!important;text-align:center!important}' +
       '[style*="max-width"]{max-width:100%!important}' +
     '}</style>';
@@ -200,17 +200,15 @@ document.addEventListener('DOMContentLoaded', async function() {
       'nav>div>a:first-child,nav>div>a:nth-child(2){display:none !important}' +
       'h1{font-size:32px !important;line-height:1.15 !important}' +
       'h2{font-size:26px !important;line-height:1.2 !important}' +
-      'section{display:block !important;padding-left:20px !important;padding-right:20px !important;padding-top:52px !important;padding-bottom:52px !important;min-height:auto !important}' +
+      'section{display:block !important;padding:52px 20px !important;min-height:auto !important}' +
       'section>div,section>article{width:100% !important;min-width:0 !important;max-width:100% !important}' +
       '[style*="grid-template-columns"]{grid-template-columns:1fr !important}' +
-      // Hero image container: match helmet specificity (section + attr + div = 0,2,2) to beat display:none
-      'section[style*="overflow:hidden"]>div:last-child{display:block !important;min-height:300px !important;position:relative !important}' +
-      'section[style*="overflow:hidden"]>div:first-child{padding:52px 24px !important}' +
-      // Footer (waitlist) image: was being hidden, give it height instead
+      'section[style*="overflow:hidden"]{display:grid !important;grid-template-columns:1fr !important;grid-template-rows:auto 320px !important;padding:0 !important;min-height:auto !important}' +
+      'section[style*="overflow:hidden"]>div:first-child{padding:52px 24px !important;width:100% !important}' +
       'section[id="waitlist"]>div:first-child{display:block !important;min-height:300px !important;position:relative !important}' +
       'section[id="waitlist"]>div:last-child{padding:32px 20px !important}' +
-      // Trainer photos: object-position top so faces are visible (not center bottom)
-      'img[style*="height:230px"]{object-position:center top !important;height:260px !important;display:block !important}' +
+      'img[alt="Britta Heinemann"]{object-position:50% 10% !important;height:280px !important}' +
+      'img[alt="Nadine Dross-Bütow"]{object-position:50% 10% !important;height:280px !important}' +
       'footer{flex-direction:column !important;gap:14px !important;padding:28px 20px !important;text-align:center !important}' +
       '[style*="max-width"]{max-width:100% !important}' +
     '}';
