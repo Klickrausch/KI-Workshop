@@ -141,6 +141,32 @@ document.addEventListener('DOMContentLoaded', async function() {
     // The manifest bytes are ours; SRI protects against CDN compromise, not this.
     template = template.replace(/\s+integrity="[^"]*"/gi, '').replace(/\s+crossorigin="[^"]*"/gi, '');
 
+    // Remove old conflicting @media block injected during earlier edits
+    (function() {
+      var ms = template.indexOf('\n  @media(max-width:768px){');
+      if (ms >= 0) { var me = template.indexOf('\n  </style>', ms); if (me >= 0) template = template.substring(0, ms) + template.substring(me); }
+    })();
+
+    // Inject clean responsive CSS into <head> before parsing
+    var mobileCss = '<style id="rsp">@media(max-width:768px){' +
+      'nav{padding:0 20px!important;height:auto!important;min-height:60px!important}' +
+      'nav>div>a:first-child,nav>div>a:nth-child(2){display:none!important}' +
+      'h1{font-size:32px!important;line-height:1.15!important}' +
+      'h2{font-size:26px!important;line-height:1.2!important}' +
+      'section{display:block!important;padding:52px 20px!important;min-height:auto!important}' +
+      'section>div,section>article{width:100%!important;min-width:0!important}' +
+      '[style*="grid-template-columns"]{grid-template-columns:1fr!important}' +
+      'section[style*="overflow:hidden"]>div:last-child{display:block!important;min-height:320px!important;position:relative!important}' +
+      'section[style*="overflow:hidden"]>div:first-child{padding:52px 24px!important}' +
+      'section[id="waitlist"]>div:first-child{display:block!important;min-height:300px!important;position:relative!important}' +
+      'section[id="waitlist"]>div:last-child{padding:32px 20px!important}' +
+      'img[alt="Britta Heinemann"]{object-position:top!important;height:280px!important}' +
+      'img[alt="Nadine Dross-Bütow"]{object-position:top!important;height:280px!important}' +
+      'footer{flex-direction:column!important;gap:14px!important;padding:28px 20px!important;text-align:center!important}' +
+      '[style*="max-width"]{max-width:100%!important}' +
+    '}</style>';
+    template = template.replace('</head>', mobileCss + '</head>');
+
     const resourceScript = '<script>window.__resources = ' +
       JSON.stringify(resourceMap).split('</' + 'script>').join('<\\/' + 'script>') +
       ';</' + 'script>';
