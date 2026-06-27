@@ -137,6 +137,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     template = template.replace('src="a6750d30-da5e-49e9-87f9-992052f0409e"', 'src="header-beide.jpg"');
     template = template.replace('src="5f3f668d-72f8-4d4f-b3c5-f2177903a230"', 'src="britta-workshop.jpg"');
     template = template.replace('src="3d47873f-edb6-4c30-88c8-6e099ac07d86"', 'src="nadine-workshop.jpg"');
+    // Inject min-height directly into the hero image container so it shows on mobile
+    template = template.replace(
+      '<div style="position:relative;overflow:hidden"><img src="header-beide.jpg"',
+      '<div style="position:relative;overflow:hidden;min-height:320px"><img src="header-beide.jpg"'
+    );
 
     setStatus('Rendering...');
     for (const uuid of uuids) template = template.split(uuid).join(blobUrls[uuid]);
@@ -165,8 +170,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       'section[style*="overflow:hidden"]>div:first-child{padding:52px 24px!important;width:100%!important}' +
       'section[id="waitlist"]>div:first-child{display:block!important;min-height:300px!important;position:relative!important}' +
       'section[id="waitlist"]>div:last-child{padding:32px 20px!important}' +
-      'img[alt="Britta Heinemann"]{object-position:50% 15%!important;height:160px!important}' +
-      'img[alt="Nadine Dross-Bütow"]{object-position:50% 15%!important;height:160px!important}' +
+      'img[alt="Britta Heinemann"]{object-position:50% 15%!important;height:240px!important}' +
+      'img[alt="Nadine Dross-Bütow"]{object-position:50% 15%!important;height:240px!important}' +
       'footer{flex-direction:column!important;gap:14px!important;padding:28px 20px!important;text-align:center!important}' +
       '[style*="max-width"]{max-width:100%!important}' +
     '}</style>';
@@ -212,8 +217,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       'section[style*="overflow:hidden"]>div:first-child{padding:52px 24px !important;width:100% !important}' +
       'section[id="waitlist"]>div:first-child{display:block !important;min-height:300px !important;position:relative !important}' +
       'section[id="waitlist"]>div:last-child{padding:32px 20px !important}' +
-      'img[alt="Britta Heinemann"]{object-position:50% 15% !important;height:160px !important}' +
-      'img[alt="Nadine Dross-Bütow"]{object-position:50% 15% !important;height:160px !important}' +
+      'img[alt="Britta Heinemann"]{object-position:50% 15% !important;height:240px !important}' +
+      'img[alt="Nadine Dross-Bütow"]{object-position:50% 15% !important;height:240px !important}' +
       'footer{flex-direction:column !important;gap:14px !important;padding:28px 20px !important;text-align:center !important}' +
       '[style*="max-width"]{max-width:100% !important}' +
     '}';
