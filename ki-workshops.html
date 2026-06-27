@@ -141,6 +141,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     // The manifest bytes are ours; SRI protects against CDN compromise, not this.
     template = template.replace(/\s+integrity="[^"]*"/gi, '').replace(/\s+crossorigin="[^"]*"/gi, '');
 
+    // Replace embedded UUID images with external photo files
+    template = template.replace('src="a6750d30-da5e-49e9-87f9-992052f0409e"', 'src="header-beide.jpg"');
+    template = template.replace('src="5f3f668d-72f8-4d4f-b3c5-f2177903a230"', 'src="britta-workshop.jpg"');
+    template = template.replace('src="3d47873f-edb6-4c30-88c8-6e099ac07d86"', 'src="nadine-workshop.jpg"');
+
     // Remove old conflicting @media block injected during earlier edits
     (function() {
       var ms = template.indexOf('\n  @media(max-width:768px){');
